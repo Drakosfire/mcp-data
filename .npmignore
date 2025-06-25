@@ -1,0 +1,49 @@
+# Development files
+node_modules/
+src/
+*.ts
+!*.d.ts
+tsconfig.json
+.env*
+.git/
+.gitignore
+
+# Build files
+/packages
+/testing
+/examples/librechat-integration.ts
+
+# Documentation (keep README.md)
+docs/
+*.md
+!README.md
+!CHANGELOG.md
+
+# Test files
+test/
+tests/
+*.test.*
+*.spec.*
+jest.config.*
+coverage/
+
+# Development tools
+.eslintrc*
+.prettierrc*
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime
+.DS_Store
+Thumbs.db
+
+# Development scripts
+scripts/
+tools/ 
