@@ -1,5 +1,5 @@
 {
-    "name": "@sizzek/mcp-data",
+    "name": "mcp-data",
     "version": "1.0.0",
     "description": "Independent MCP data storage abstraction layer - Compatible with LibreChat and other MCP hosts",
     "type": "module",
@@ -11,7 +11,8 @@
         "clean": "rm -rf dist/",
         "test": "jest",
         "lint": "eslint storage/**/*.ts",
-        "format": "prettier --write storage/**/*.ts"
+        "format": "prettier --write storage/**/*.ts",
+        "prepublishOnly": "npm run clean && npm run build"
     },
     "dependencies": {
         "mongodb": "^6.3.0"
@@ -36,7 +37,8 @@
     "files": [
         "dist/",
         "README.md",
-        "CHANGELOG.md"
+        "CHANGELOG.md",
+        "LICENSE"
     ],
     "keywords": [
         "mcp",
@@ -45,18 +47,19 @@
         "encryption",
         "user-isolation",
         "librechat",
-        "sizzek"
+        "sizzek",
+        "typescript"
     ],
-    "author": "Sizzek",
+    "author": "Alan Meigs",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/sizzek/mcp-data.git"
+        "url": "https://github.com/Drakosfire/mcp-data.git"
     },
     "bugs": {
-        "url": "https://github.com/sizzek/mcp-data/issues"
+        "url": "https://github.com/Drakosfire/mcp-data/issues"
     },
-    "homepage": "https://github.com/sizzek/mcp-data#readme",
+    "homepage": "https://github.com/Drakosfire/mcp-data#readme",
     "engines": {
         "node": ">=18.0.0"
     }

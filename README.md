@@ -2,7 +2,7 @@
 
 **Independent storage abstraction layer for MCP servers with user isolation and encryption support**
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/sizzek/mcp-data)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Drakosfire/mcp-data)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 
@@ -26,16 +26,16 @@ The Sizzek MCP Data project provides a robust, independent storage abstraction l
 
 ```bash
 # In your MCP server project
-npm install @sizzek/mcp-data
+npm install mcp-data
 
 # Or with yarn
-yarn add @sizzek/mcp-data
+yarn add mcp-data
 ```
 
 ### Basic Usage
 
 ```typescript
-import { StorageFactory } from '@sizzek/mcp-data';
+import { StorageFactory } from 'mcp-data';
 
 // Create user-isolated storage
 const storage = StorageFactory.createFromEnvironment(defaultData);
@@ -53,7 +53,7 @@ const data = await storage.loadForUser('+1234567890');
 Perfect for development and small deployments:
 
 ```typescript
-import { StorageFactory } from '@sizzek/mcp-data';
+import { StorageFactory } from 'mcp-data';
 
 const storage = StorageFactory.createUserStorage({
   type: 'json',
@@ -68,7 +68,7 @@ const storage = StorageFactory.createUserStorage({
 Production-ready with encryption:
 
 ```typescript
-import { StorageFactory } from '@sizzek/mcp-data';
+import { StorageFactory } from 'mcp-data';
 
 const storage = StorageFactory.createUserStorage({
   type: 'mongodb',
@@ -85,7 +85,7 @@ const storage = StorageFactory.createUserStorage({
 For sensitive data like API credentials:
 
 ```typescript
-import { StorageFactory } from '@sizzek/mcp-data';
+import { StorageFactory } from 'mcp-data';
 
 // Create encrypted storage
 const credentialsStorage = StorageFactory.createEncryptedFromEnvironment({
@@ -179,7 +179,7 @@ mcpServers:
 ## 📝 Example: SMS User Memory System
 
 ```typescript
-import { StorageFactory } from '@sizzek/mcp-data';
+import { StorageFactory } from 'mcp-data';
 
 interface UserMemory {
   entities: Array<{name: string, type: string, facts: string[]}>;
@@ -243,7 +243,7 @@ class SMSMemoryManager {
 ## 🧪 Testing
 
 ```typescript
-import { StorageFactory } from '@sizzek/mcp-data';
+import { StorageFactory } from 'mcp-data';
 
 // Create test storage (temporary)
 const testStorage = StorageFactory.createTestStorage(defaultData);
@@ -272,7 +272,7 @@ await storage.cleanup();
 
 ### From JSON to MongoDB
 ```typescript
-import { StorageFactory } from '@sizzek/mcp-data';
+import { StorageFactory } from 'mcp-data';
 
 const jsonStorage = StorageFactory.createUserStorage({
   type: 'json',
@@ -315,6 +315,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/sizzek/mcp-data/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/sizzek/mcp-data/discussions)
-- **Documentation**: [Full Documentation](https://github.com/sizzek/mcp-data/wiki) 
+- **Issues**: [GitHub Issues](https://github.com/Drakosfire/mcp-data/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Drakosfire/mcp-data/discussions)
+- **Email**: alan.meigs@gmail.com
+
+---
+
+**Made with ❤️ by Alan Meigs** 
