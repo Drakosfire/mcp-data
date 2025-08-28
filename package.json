@@ -1,6 +1,6 @@
 {
     "name": "mcp-data",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Independent MCP data storage abstraction layer - Compatible with LibreChat and other MCP hosts",
     "type": "module",
     "main": "./dist/index.js",
