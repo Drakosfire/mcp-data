@@ -82,24 +82,56 @@ export class PaginatedGraphStorage implements UserStorageInterface<KnowledgeGrap
 
     private async createIndexes(): Promise<void> {
         try {
-            // Entity indexes
-            await Promise.all([
-                this.entitiesCollection.createIndex({ "userId": 1, "entityId": 1 }, { unique: true }),
-                this.entitiesCollection.createIndex({ "userId": 1, "entityType": 1 }),
-                this.entitiesCollection.createIndex({ "userId": 1, "searchText": "text" }),
-                this.entitiesCollection.createIndex({ "userId": 1, "metadata.updatedAt": -1 })
-            ]);
+            // Entity indexes - use try/catch for each to handle existing indexes gracefully
+            const entityIndexes = [
+                { key: { "userId": 1, "entityId": 1 } as any, options: { unique: true, name: "userId_entityId_unique" } },
+                { key: { "userId": 1, "entityType": 1 } as any, options: { name: "userId_entityType" } },
+                { key: { "userId": 1, "searchText": "text" } as any, options: { name: "userId_searchText_text" } },
+                { key: { "userId": 1, "metadata.updatedAt": -1 } as any, options: { name: "userId_updatedAt_desc" } }
+            ];
 
-            // Relation indexes  
-            await Promise.all([
-                this.relationsCollection.createIndex({ "userId": 1, "fromEntityId": 1 }),
-                this.relationsCollection.createIndex({ "userId": 1, "toEntityId": 1 }),
-                this.relationsCollection.createIndex({ "userId": 1, "relationType": 1 }),
-                this.relationsCollection.createIndex({ "fromEntityId": 1, "toEntityId": 1 }, { unique: true })
-            ]);
+            for (const index of entityIndexes) {
+                try {
+                    await this.entitiesCollection.createIndex(index.key, index.options);
+                } catch (error: any) {
+                    if (error.code === 86) { // IndexKeySpecsConflict
+                        console.warn(`[PaginatedGraphStorage] Index ${index.options.name} already exists with different properties, skipping`);
+                    } else {
+                        console.warn(`[PaginatedGraphStorage] Failed to create entity index ${index.options.name}:`, error.message);
+                    }
+                }
+            }
+
+            // Relation indexes
+            const relationIndexes = [
+                { key: { "userId": 1, "fromEntityId": 1 } as any, options: { name: "userId_fromEntityId" } },
+                { key: { "userId": 1, "toEntityId": 1 } as any, options: { name: "userId_toEntityId" } },
+                { key: { "userId": 1, "relationType": 1 } as any, options: { name: "userId_relationType" } },
+                { key: { "fromEntityId": 1, "toEntityId": 1 } as any, options: { unique: true, name: "fromEntityId_toEntityId_unique" } }
+            ];
+
+            for (const index of relationIndexes) {
+                try {
+                    await this.relationsCollection.createIndex(index.key, index.options);
+                } catch (error: any) {
+                    if (error.code === 86) { // IndexKeySpecsConflict
+                        console.warn(`[PaginatedGraphStorage] Index ${index.options.name} already exists with different properties, skipping`);
+                    } else {
+                        console.warn(`[PaginatedGraphStorage] Failed to create relation index ${index.options.name}:`, error.message);
+                    }
+                }
+            }
 
             // Index collection
-            await this.indexCollection.createIndex({ "userId": 1 }, { unique: true });
+            try {
+                await this.indexCollection.createIndex({ "userId": 1 }, { unique: true, name: "userId_unique" });
+            } catch (error: any) {
+                if (error.code === 86) { // IndexKeySpecsConflict
+                    console.warn('[PaginatedGraphStorage] Index userId_unique already exists with different properties, skipping');
+                } else {
+                    console.warn('[PaginatedGraphStorage] Failed to create index collection index:', error.message);
+                }
+            }
 
         } catch (error) {
             console.warn('[PaginatedGraphStorage] Failed to create indexes:', error);

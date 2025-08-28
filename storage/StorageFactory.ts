@@ -232,17 +232,6 @@ export class StorageFactory {
             process.env.MCP_MONGODB_COLLECTION ||
             'mcp_memory';
 
-        console.error('[StorageFactory] Creating PaginatedGraphStorage with:', {
-            connectionString: connectionString ? 'SET' : 'MISSING',
-            databaseName,
-            collectionPrefix,
-            envVars: {
-                MONGODB_CONNECTION_STRING: process.env.MONGODB_CONNECTION_STRING ? 'SET' : 'MISSING',
-                MCP_MONGODB_URI: process.env.MCP_MONGODB_URI ? 'SET' : 'MISSING',
-                MONGO_URI: process.env.MONGO_URI ? 'SET' : 'MISSING'
-            }
-        });
-
         return StorageFactory.createGraphStorage(connectionString, databaseName, collectionPrefix);
     }
 
