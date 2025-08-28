@@ -221,6 +221,7 @@ export class StorageFactory {
     static createGraphStorageFromEnvironment(): PaginatedGraphStorage {
         const connectionString = process.env.MONGODB_CONNECTION_STRING ||
             process.env.MCP_MONGODB_URI ||
+            process.env.MONGO_URI ||
             'mongodb://localhost:27017/LibreChat';
 
         const databaseName = process.env.MONGODB_DATABASE ||
@@ -230,6 +231,17 @@ export class StorageFactory {
         const collectionPrefix = process.env.MONGODB_COLLECTION_PREFIX ||
             process.env.MCP_MONGODB_COLLECTION ||
             'mcp_memory';
+
+        console.error('[StorageFactory] Creating PaginatedGraphStorage with:', {
+            connectionString: connectionString ? 'SET' : 'MISSING',
+            databaseName,
+            collectionPrefix,
+            envVars: {
+                MONGODB_CONNECTION_STRING: process.env.MONGODB_CONNECTION_STRING ? 'SET' : 'MISSING',
+                MCP_MONGODB_URI: process.env.MCP_MONGODB_URI ? 'SET' : 'MISSING',
+                MONGO_URI: process.env.MONGO_URI ? 'SET' : 'MISSING'
+            }
+        });
 
         return StorageFactory.createGraphStorage(connectionString, databaseName, collectionPrefix);
     }

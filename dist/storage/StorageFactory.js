@@ -160,6 +160,7 @@ export class StorageFactory {
     static createGraphStorageFromEnvironment() {
         const connectionString = process.env.MONGODB_CONNECTION_STRING ||
             process.env.MCP_MONGODB_URI ||
+            process.env.MONGO_URI ||
             'mongodb://localhost:27017/LibreChat';
         const databaseName = process.env.MONGODB_DATABASE ||
             process.env.MCP_MONGODB_DATABASE ||
